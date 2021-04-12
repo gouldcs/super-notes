@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import PageLayout from './pages/CausalInference'
+import PageLayout from './pages/PageLayout'
 
 function App() {
   return (

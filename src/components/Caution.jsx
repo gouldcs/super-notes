@@ -27,14 +27,15 @@ const useStyles = makeStyles(() => ({
   },
 
   textbox: {
+    resize: "vertical",
+    width: "70vw",
     display: "flex",
     flexDirecton: "row",
-    width: "95%",
     textAlign: "left",
     backgroundColor: "#eeeeee",
     border: "solid",
-    borderWidth: 1,
-    borderRadius: 25,
+    borderWidth: 2,
+    borderRadius: 15,
     borderColor: "#FF1515",
     color: "#FF1515",
     fontFamily:
@@ -43,6 +44,16 @@ const useStyles = makeStyles(() => ({
     sans-serif;",
     fontSize: 14,
     fontWeight: 500,
+    "&::placeholder": {
+      color: "#ff6565",
+      fontFamily:
+        "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', \
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', \
+    sans-serif;",
+      fontSize: 14,
+      fontWeight: 500,
+    },
+    marginTop: 15,
     paddingLeft: 15,
     paddingRight: 15,
     paddingTop: 10,
@@ -106,7 +117,12 @@ const Caution = (props) => {
     document.getElementById("editbutton").style.display = "none";
     textContents = (
       <div>
-        <textarea type="text" id="newText" className={classes.textbox}>
+        <textarea
+          placeholder="enter new notes here"
+          type="text"
+          id="newText"
+          className={classes.textbox}
+        >
           {textContents}
         </textarea>
         <div style={{ display: "flex", flexDirection: "row" }}>
@@ -175,7 +191,7 @@ const Caution = (props) => {
 
   const addText = () => {
     var newText = document.getElementById("newText").value;
-    displayText += "\n" + newText;
+    displayText += " " + newText;
     setDisplayText(displayText);
     if (hasText === false) {
       hasText = true;
@@ -233,6 +249,7 @@ const Caution = (props) => {
         x
       </Button>
       <img
+        alt="caution"
         src={caution}
         style={{ width: "3vh", maxWidth: 25, paddingRight: 10 }}
       />
