@@ -4,20 +4,19 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles(() => ({
   background: {
     display: "flex",
-    flexDirection: "column",
     width: "80%",
-    color: "#464646",
+    color: "#121212",
     textAlign: "left",
-    fontSize: 14,
-    fontWeight: 400,
+    fontSize: 24,
+    fontWeight: 700,
     marginBottom: 15,
   },
 }));
 
-const Header = (props) => {
+const Subheader = (props) => {
   const classes = useStyles();
 
   return <div className={classes.background}>{props.children}</div>;
 };
 
-export default Header;
+export default Subheader;

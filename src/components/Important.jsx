@@ -1,9 +1,9 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
 
-import important from './../assets/important.svg'
+import important from "./../assets/important.svg";
 
-const useStyles = makeStyles( () => ({
+const useStyles = makeStyles(() => ({
   background: {
     display: "flex",
     flexDirecton: "row",
@@ -21,19 +21,22 @@ const useStyles = makeStyles( () => ({
     paddingLeft: 15,
     paddingRight: 15,
     paddingTop: 10,
-    paddingBottom: 10
-  }
-}))
+    paddingBottom: 10,
+  },
+}));
 
 const Important = (props) => {
   const classes = useStyles();
 
   return (
     <div className={classes.background}>
-      <img src={important} style={{width:"3vh", paddingRight: 10,}}/>
+      <img
+        src={important}
+        style={{ width: "3vh", maxWidth: 25, paddingRight: 10 }}
+      />
       {props.children}
     </div>
-  )
-}
+  );
+};
 
-export default Important
+export default Important;

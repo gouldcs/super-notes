@@ -1,9 +1,9 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
 
-import correct from './../assets/correct.svg'
+import correct from "./../assets/correct.svg";
 
-const useStyles = makeStyles( () => ({
+const useStyles = makeStyles(() => ({
   background: {
     display: "flex",
     flexDirecton: "row",
@@ -21,19 +21,24 @@ const useStyles = makeStyles( () => ({
     paddingLeft: 15,
     paddingRight: 15,
     paddingTop: 10,
-    paddingBottom: 10
-  }
-}))
+    paddingBottom: 10,
+  },
+}));
 
 const Correct = (props) => {
   const classes = useStyles();
 
   return (
     <div className={classes.background}>
-      <img src={correct} style={{width:"3vh", paddingRight: 10,}}/>
-      {props.children}
+      <img
+        src={correct}
+        style={{ width: "3vh", maxWidth: 25, paddingRight: 10 }}
+      />
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        {props.children}
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Correct
+export default Correct;

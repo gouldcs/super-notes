@@ -1,9 +1,9 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
 
-import question from './../assets/question.svg'
+import question from "./../assets/question.svg";
 
-const useStyles = makeStyles( () => ({
+const useStyles = makeStyles(() => ({
   background: {
     display: "flex",
     flexDirecton: "row",
@@ -21,19 +21,24 @@ const useStyles = makeStyles( () => ({
     paddingLeft: 15,
     paddingRight: 15,
     paddingTop: 10,
-    paddingBottom: 10
-  }
-}))
+    paddingBottom: 10,
+  },
+}));
 
 const Question = (props) => {
   const classes = useStyles();
 
   return (
     <div className={classes.background}>
-      <img src={question} style={{width:"1.5vh", paddingRight: 10,}}/>
-      {props.children}
+      <img
+        src={question}
+        style={{ width: "1.5vh", maxWidth: 7, paddingRight: 10 }}
+      />
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        {props.children}
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Question
+export default Question;
