@@ -1,19 +1,27 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React from "react"
+import { makeStyles } from "@material-ui/core/styles"
 
-import Header from "../../components/Header";
-import Subheader from "../../components/Subheader";
-import Text from "../../components/Text";
-import Image from "../../components/Image";
-import Warn from "../../components/Warn";
-import Caution from "../../components/Caution";
-import Info from "../../components/Info";
-import Correct from "../../components/Correct";
-import Question from "../../components/Question";
-import Page from "./../../components/Page";
-import Important from "../../components/Important";
-import Code from "../../components/Code";
-import twinnetwork from "./../../assets/twin_network.PNG";
+import Header from "../../components/Header"
+import Subheader from "../../components/Subheader"
+import Text from "../../components/Text"
+import Image from "../../components/Image"
+import Warn from "../../components/Warn"
+import Caution from "../../components/Caution"
+import Info from "../../components/Info"
+import Correct from "../../components/Correct"
+import Question from "../../components/Question"
+import Page from "./../../components/Page"
+import Section from "./../../components/Section"
+import Important from "../../components/Important"
+import Code from "../../components/Code"
+import twinnetwork from "./../../assets/twin_network.PNG"
+import twin2 from "./../../assets/twin2.PNG"
+import twin3 from "./../../assets/twin3.PNG"
+import cpt from "./../../assets/cpt.PNG"
+import findprob from "./../../assets/findprob.PNG"
+import prelim from "./../../assets/prelim.PNG"
+import prelim2 from "./../../assets/prelim2.PNG"
+import prelim3 from "./../../assets/prelim3.PNG"
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -38,10 +46,10 @@ const useStyles = makeStyles(() => ({
     marginTop: 25,
     boxShadow: "0px 0px 20px rgba(0, 0, 0, 0.45)",
   },
-}));
+}))
 
 const CausalInference = (props) => {
-  const classes = useStyles();
+  const classes = useStyles()
 
   return (
     <Page>
@@ -256,8 +264,147 @@ const CausalInference = (props) => {
           </span>
         </span>
       </Text>
+      <Header>New Variables</Header>
+      <Section>
+        <Question>
+          What if the model was modified such that S1 had a parent, N (nerves),
+          which changed our structural equations?
+          <br />
+          <br />
+          {"u = {G, N}\n"}
+          <br />
+          {"v = {c, s1, s2, D}\n"}
+          <br />
+          {"P(u) = {P(G = 0) = 0.8, P(N=0) = 0.6}\n"}
+          <br />
+          {
+            "F = {\nc <- fc(G) = g;\ns1<-fs1(c)=c;\ns2<-fs2(c) = c;\nD<-fD(s1, s2)=s1 or s2; }\n"
+          }
+          <br />
+          <br />
+          <Info>
+            Example: "What's the likelihood the prisoner dies if S1 doesn't
+            shot, given that he did?"
+            <br />
+            P(D_(s1=0) = 1 | s1 = 1)
+          </Info>
+        </Question>
+        <Important>Reminder: Think about the twin network!</Important>
+        <Text>
+          Let's take a look at the twin network model, based on the observed and
+          inteventional models. Keep in mind that we are still looking at where
+          soldier 1 does not shoot, while the observational model is still
+          non-determinate.
+        </Text>
+        <Image>{twin2}</Image>
+        <Important>
+          Remember that N cannot influence the actions of the intervened model's
+          soldier 1! The relationship is severed.
+        </Important>
+        <Subheader>Step 1: Abduction ({"P(u) <- P(u|e)"})</Subheader>
+        <Section>
+          <Warn>
+            We only need to update P(G) for this query because N is independent
+            from Mx.
+            <br />
+            Therefore: {"P(G) <- P(G|S1 = 1)"}
+          </Warn>
+          <Question>
+            The obvious first step in the process is to find P(G|S1=1), but how
+            do we find that?
+            <br />
+            <br />
+            <Correct>
+              A tier 1 query! We can use enumeration inference to compute, BUT
+              that requires us to have CPTs.
+              <br />
+              THANKFULLY, they can be derived from the structural equations and
+              the probable distributions of U:
+              <Image>{cpt}</Image>
+            </Correct>
+          </Question>
+        </Section>
+        <Subheader>Solving P(G|S1=1)</Subheader>
+        <Section>
+          <Info>
+            1. Label: {"Q = {G}, e = {S1 = 1}, Y={C, N}"}
+            <Section>
+              1. Find P(G, S=1)
+              <br />
+              <Image>{findprob}</Image>
+              <br />
+              2. P(S=1) = P(G=0, S=1) + P(G=1,S=1) = 0.52 <br />
+              3. {"Model of (G, P(G|S1=1) { (0, 0.62), (1, 0.38)"}
+            </Section>
+            2. Action: Switch to interventional model
+            <Section>
+              {"fs1<-0: replace SE of s with hypothetical constant"}
+            </Section>
+            3. Prediction: Solve for P(D_(s=0) = 1) ion interventional model and
+            with updated P(u|e)
+            <Section>{"P(D_(s1=0) = 1 | s1 = 1) = 0.38"}</Section>
+          </Info>
+        </Section>
+        <Subheader>Data-Driven Counterfactuals</Subheader>
+        <Section>
+          <Text>
+            Some reasons we may not be able to perform the 3-step CF
+            computation:
+            <Section>
+              <Text>
+                1. For cf Yx, we may not be able to identify the effect of the
+                antecedent x on query y given only observational data
+              </Text>
+              <Text>
+                2. We don't have a fully-specified SCM (don't know structural
+                equations, F)
+              </Text>
+            </Section>
+          </Text>
+          <Info>
+            Example: Drug trials with treatments X: {"{0, 1}"}, and patient
+            recovery Y: {"{0, 1}"}, and in practice, doctors prescribe Xi with
+            different confounding criteria.
+            <br />
+            <br />X -> Y and Y {"< - - >"} X <br />
+            <br />
+            <Question>
+              Lacking F anx x,y are confounded, could we answer a counterfactual
+              asking about a patient's chance of recovery if they were treated
+              differently than they were?
+            </Question>
+            WLOG: P(Y_(x=1) = 1 | x=0)
+            <Warn>
+              Notice that x = 1 on the left, and x = 0 on the right! So why do
+              this?
+            </Warn>
+            <Important>
+              This is an important query to answer, because it informs doctors
+              as to the optimality of their treatment! What is the probability
+              that a patient recovers with drug 1, given drug 0?
+            </Important>
+            Now let's look at the twin network:
+            <Image>{twin3}</Image>
+            <Info>
+              Idea: we can still get info about Yx from the observed x through
+              clever combination of both observational AND interventional data
+              -- NO STRUCTURAL EQUATIONS REQUIRED!
+            </Info>
+            <Important>
+              Our goal is to try to find tier-3 P(Y_(x=1)|X=0) from tier 1 and
+              tier 2 expressions alone
+            </Important>
+            <Warn>
+              Preliminaries:
+              <Image>{prelim}</Image>
+              <Image>{prelim2}</Image>
+              <Image>{prelim3}</Image>
+            </Warn>
+          </Info>
+        </Section>
+      </Section>
     </Page>
-  );
-};
+  )
+}
 
-export default CausalInference;
+export default CausalInference

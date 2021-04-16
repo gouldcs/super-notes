@@ -1,7 +1,7 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React from "react"
+import { makeStyles } from "@material-ui/core/styles"
 
-import info from "./../assets/info.svg";
+import info from "./../assets/info.svg"
 
 const useStyles = makeStyles(() => ({
   background: {
@@ -18,15 +18,16 @@ const useStyles = makeStyles(() => ({
     fontSize: 14,
     fontWeight: 500,
     marginBottom: 15,
+    marginTop: 15,
     paddingLeft: 15,
     paddingRight: 15,
     paddingTop: 10,
     paddingBottom: 10,
   },
-}));
+}))
 
 const Info = (props) => {
-  const classes = useStyles();
+  const classes = useStyles()
 
   return (
     <div className={classes.background}>
@@ -35,9 +36,11 @@ const Info = (props) => {
         alt="info"
         style={{ width: "3vh", maxWidth: 25, paddingRight: 10 }}
       />
-      {props.children}
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        {props.children}
+      </div>
     </div>
-  );
-};
+  )
+}
 
-export default Info;
+export default Info

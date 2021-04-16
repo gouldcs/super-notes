@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useState } from "react"
+import { makeStyles } from "@material-ui/core/styles"
 
-import Button from "@material-ui/core/Button";
-import caution from "./../assets/caution.svg";
+import Button from "@material-ui/core/Button"
+import caution from "./../assets/caution.svg"
+import EditableText from "./EditableText"
 
 const useStyles = makeStyles(() => ({
   background: {
@@ -28,7 +29,8 @@ const useStyles = makeStyles(() => ({
 
   textbox: {
     resize: "vertical",
-    width: "70vw",
+    outline: "none",
+    width: "100%",
     display: "flex",
     flexDirecton: "row",
     textAlign: "left",
@@ -92,191 +94,24 @@ const useStyles = makeStyles(() => ({
     textTransform: "none",
     borderRadius: 30,
   },
-}));
+}))
 
 const Caution = (props) => {
-  const classes = useStyles();
-  var [textContents, setTextContents] = useState("");
-  var [displayText, setDisplayText] = useState("");
-  var [hasButton, setButton] = useState(false);
-  var [hasText, setHasText] = useState(false);
-  var [justClicked, setJustClicked] = useState(false);
-  var [dialogueOpen, setDialogueOpen] = useState(false);
-
-  const clearText = () => {
-    textContents = "";
-    setTextContents(textContents);
-  };
-
-  const openText = () => {
-    textContents = "";
-    setTextContents(textContents);
-    dialogueOpen = true;
-    setDialogueOpen(dialogueOpen);
-    document.getElementById("button").style.display = "none";
-    document.getElementById("editbutton").style.display = "none";
-    textContents = (
-      <div>
-        <textarea
-          placeholder="enter new notes here"
-          type="text"
-          id="newText"
-          className={classes.textbox}
-        >
-          {textContents}
-        </textarea>
-        <div style={{ display: "flex", flexDirection: "row" }}>
-          <Button
-            variant="outlined"
-            className={classes.submitButton}
-            onClick={addText}
-          >
-            add note
-          </Button>
-          <Button
-            variant="outlined"
-            className={classes.submitButton}
-            onClick={editText}
-          >
-            edit
-          </Button>
-        </div>
-      </div>
-    );
-    setTextContents(textContents);
-  };
-
-  const editText = () => {
-    dialogueOpen = true;
-    setDialogueOpen(dialogueOpen);
-    document.getElementById("button").style.display = "none";
-    document.getElementById("editbutton").style.display = "none";
-    textContents = (
-      <div>
-        <textarea type="text" id="replaceText" className={classes.textbox}>
-          {displayText}
-        </textarea>
-        <div style={{ display: "flex", flexDirection: "row" }}>
-          <Button
-            id="button"
-            variant="outlined"
-            className={classes.submitButton}
-            onClick={replaceText}
-          >
-            update
-          </Button>
-          <Button
-            id="button"
-            variant="outlined"
-            className={classes.submitButton}
-            onClick={clearText}
-          >
-            cancel
-          </Button>
-        </div>
-      </div>
-    );
-    setTextContents(textContents);
-  };
-
-  const replaceText = () => {
-    var newText = document.getElementById("replaceText").value;
-    displayText = newText;
-    setDisplayText(displayText);
-    textContents = "";
-    setTextContents("");
-    dialogueOpen = false;
-    setDialogueOpen(dialogueOpen);
-  };
-
-  const addText = () => {
-    var newText = document.getElementById("newText").value;
-    displayText += " " + newText;
-    setDisplayText(displayText);
-    if (hasText === false) {
-      hasText = true;
-      setHasText(hasText);
-    }
-    textContents = "";
-    setTextContents("");
-    dialogueOpen = false;
-    setDialogueOpen(dialogueOpen);
-  };
-
-  const toggleButton = () => {
-    if (dialogueOpen === false || justClicked === false) {
-      if (hasButton === false && hasText === true) {
-        document.getElementById("button").style.display = "flex";
-        document.getElementById("editbutton").style.display = "flex";
-        document.getElementById("exit").style.display = "flex";
-        hasButton = true;
-        setButton(hasButton);
-      } else if (hasButton === false) {
-        document.getElementById("button").style.display = "flex";
-        document.getElementById("exit").style.display = "flex";
-        hasButton = true;
-        setButton(hasButton);
-      } else if (hasText === false) {
-        document.getElementById("editbutton").style.display = "flex";
-        document.getElementById("exit").style.display = "flex";
-      }
-    } else {
-      justClicked = false;
-      setJustClicked(justClicked);
-    }
-  };
-
-  const hideButtons = () => {
-    if (hasButton === true || hasText === true) {
-      document.getElementById("button").style.display = "none";
-      document.getElementById("editbutton").style.display = "none";
-      document.getElementById("exit").style.display = "none";
-      hasButton = false;
-      setButton(hasButton);
-      justClicked = true;
-      setJustClicked(justClicked);
-    }
-  };
+  const classes = useStyles()
+  const uniqueTag = Math.random()
 
   return (
-    <div className={classes.background} onClick={toggleButton}>
-      <Button
-        id="exit"
-        variant="outlined"
-        className={classes.exit}
-        onClick={hideButtons}
-      >
-        x
-      </Button>
+    <div className={classes.background}>
       <img
         alt="caution"
         src={caution}
         style={{ width: "3vh", maxWidth: 25, paddingRight: 10 }}
       />
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        {displayText}
-        <div style={{ display: "flex", flexDirection: "row" }}>
-          <Button
-            id="button"
-            variant="outlined"
-            className={classes.button}
-            onClick={openText}
-          >
-            add
-          </Button>
-          <Button
-            id="editbutton"
-            variant="outlined"
-            className={classes.button}
-            onClick={editText}
-          >
-            edit
-          </Button>
-        </div>
-        {textContents}
+      <div style={{ display: "flex", flexDirection: "column", width: "80%" }}>
+        <EditableText color="#FF1515" border="#FF1515" tag={uniqueTag} />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Caution;
+export default Caution

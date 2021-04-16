@@ -1,23 +1,24 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React from "react"
+import { makeStyles } from "@material-ui/core/styles"
 
-import logo from "./../assets/fornotes.svg";
-import Home from "./Home";
-import AllTypes from "./demos/AllTypes";
-import CausalInference from "./demos/CausalInference";
-import Interactive from "./demos/Interactive";
+import logo from "./../assets/fornotes.svg"
+import Home from "./Home"
+import AllTypes from "./demos/AllTypes"
+import CausalInference from "./demos/CausalInference"
+import Interactive from "./demos/Interactive"
+import Editable from "./demos/EditableDemo"
 
-import Header from "./../components/Header";
-import Text from "./../components/Text";
-import Warn from "./../components/Warn";
-import Caution from "./../components/Caution";
-import Info from "./../components/Info";
-import Correct from "./../components/Correct";
-import Question from "./../components/Question";
-import Important from "./../components/Important";
-import Code from "./../components/Code";
+import Header from "./../components/Header"
+import Text from "./../components/Text"
+import Warn from "./../components/Warn"
+import Caution from "./../components/Caution"
+import Info from "./../components/Info"
+import Correct from "./../components/Correct"
+import Question from "./../components/Question"
+import Important from "./../components/Important"
+import Code from "./../components/Code"
 
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -29,10 +30,10 @@ const useStyles = makeStyles(() => ({
     backgroundColor: "#1581ff",
     marginBottom: -50,
   },
-}));
+}))
 
 const PageLayout = (props) => {
-  const classes = useStyles();
+  const classes = useStyles()
 
   return (
     <div className={classes.root}>
@@ -55,10 +56,13 @@ const PageLayout = (props) => {
           <Route exact path="/interactive">
             <Interactive />
           </Route>
+          <Route exact path="/test">
+            <Editable />
+          </Route>
         </Switch>
       </Router>
     </div>
-  );
-};
+  )
+}
 
-export default PageLayout;
+export default PageLayout
