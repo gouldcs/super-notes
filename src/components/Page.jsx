@@ -38,6 +38,16 @@ const Page = (props) => {
     document.getElementById("options").style.display = "flex"
   }
 
+  const addHeader = () => {
+    setComponents(components.concat(<Header />))
+    document.getElementById("options").style.display = "none"
+  }
+
+  const addText = () => {
+    setComponents(components.concat(<Text />))
+    document.getElementById("options").style.display = "none"
+  }
+
   const addCaution = () => {
     setComponents(components.concat(<Caution />))
     document.getElementById("options").style.display = "none"
@@ -52,6 +62,8 @@ const Page = (props) => {
     <div className={classes.page}>
       {components}
       <div id="options" style={{ display: "none" }}>
+        <Button onClick={addHeader}>header</Button>
+        <Button onClick={addText}>text</Button>
         <Button onClick={addCaution}>caution</Button>
         <Button onClick={addImportant}>important</Button>
       </div>

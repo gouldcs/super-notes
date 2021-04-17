@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { makeStyles } from "@material-ui/core/styles"
+import useSubmit from "../hooks/useSubmit"
 
 import Button from "@material-ui/core/Button"
 
@@ -15,7 +16,6 @@ const useStyles = makeStyles(() => ({
   },
 
   button: {
-    display: "none",
     alignSelf: "center",
     width: "2vh",
     textTransform: "none",
@@ -62,45 +62,52 @@ const useStyles = makeStyles(() => ({
 
 const EditableText = (props) => {
   const classes = useStyles()
+  const { inputs, handleInputChange, handleSubmit } = useSubmit()
   var [displayText, setDisplayText] = useState("click here to add notes!")
-
-  const editText = () => {
-    document.getElementById("editbutton").style.display = "flex"
-    displayText = (
-      <div style={{ width: "100%" }}>
-        <textarea
-          type="text"
-          id="replaceText"
-          className={classes.textbox}
-          style={{ borderColor: props.border }}
-        >
-          {displayText === undefined ? "click here to add notes" : displayText}
-        </textarea>
-      </div>
-    )
-    setDisplayText(displayText)
-    console.log("Ah shit")
-  }
-
-  const submitEdit = () => {
-    var newText = document.getElementById("replaceText").value
-    if (newText === "") {
-      displayText = "click here to add notes!"
-    } else {
-      displayText = newText
-    }
-    document.getElementById("editbutton").style.display = "none"
-    setDisplayText(displayText)
-  }
-
-  return (
-    <div className={classes.background} style={{ color: props.color }}>
-      <div style={{ width: "100%" }} onClick={editText}>
-        {displayText}
-      </div>
-      <Button id="editbutton" className={classes.button} onClick={submitEdit}>
+  var [showBox, setShowBox] = useState(false)
+  var [showClickArea, setClickArea] = useState(true)
+  const inputBox = (
+    <form
+      onSubmit={handleSubmit}
+      style={{ display: "flex", flexDirection: "row", width: "100%" }}
+    >
+      <textarea
+        type="text"
+        name="displayText"
+        className={classes.textbox}
+        onChange={handleInputChange}
+        value={inputs}
+        style={{ borderColor: props.border }}
+      >
+        {inputs}
+      </textarea>
+      <Button id="editbutton" type="submit" className={classes.button}>
         edit
       </Button>
+    </form>
+  )
+
+  const toggleEdit = () => {
+    showClickArea = !showClickArea
+    setClickArea(showClickArea)
+    showBox = !showBox
+    setShowBox(showBox)
+  }
+
+  const clickArea = (
+    <div
+      style={{ width: "80%", height: "200%", position: "absolute" }}
+      onClick={toggleEdit}
+    />
+  )
+
+  return (
+    <div>
+      {showClickArea ? clickArea : null}
+      <div className={classes.background} style={{ color: props.color }}>
+        {inputs}
+        <div>{showBox ? inputBox : displayText}</div>
+      </div>
     </div>
   )
 }
