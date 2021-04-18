@@ -10,22 +10,19 @@ const useStyles = makeStyles(() => ({
     flexDirection: "row",
     width: "80%",
     textAlign: "left",
-    fontSize: 14,
-    fontWeight: 400,
     marginBottom: 15,
   },
 
   button: {
     alignSelf: "center",
-    width: "2vh",
-    fontSize: 12,
+    width: "1.4vh",
+    fontSize: 10,
     textTransform: "none",
     backgroundColor: "#eeeeee",
     color: "#343434",
     height: "20",
     borderRadius: 20,
     height: 20,
-    marginLeft: 35,
   },
 
   textbox: {
@@ -44,7 +41,6 @@ const useStyles = makeStyles(() => ({
     fontSize: 14,
     fontWeight: 500,
     "&::placeholder": {
-      color: "#ff6565",
       fontFamily:
         "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', \
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', \
@@ -63,7 +59,7 @@ const useStyles = makeStyles(() => ({
 
 const EditableText = (props) => {
   const classes = useStyles()
-  var [displayText, setDisplayText] = useState("click here to add notes!")
+  var [displayText, setDisplayText] = useState("click 'edit' to add notes! 👉")
   var [edit, setEdit] = useState(false)
   var [showEdit, setShowEdit] = useState(true)
 
@@ -95,12 +91,23 @@ const EditableText = (props) => {
 
   function setDisplayState() {
     if (edit === false) {
-      return <div className={classes.notes}>{displayText}</div>
+      return (
+        <div
+          style={{
+            color: props.color,
+            fontWeight: props.weight ? props.weight : 400,
+            fontSize: props.size ? props.size : 14,
+          }}
+        >
+          {displayText}
+        </div>
+      )
     } else {
       return (
         <div>
           <textarea
             className={classes.textbox}
+            style={{ color: props.color }}
             value={displayText}
             onChange={(e) => {
               displayText = e.target.value
@@ -117,9 +124,19 @@ const EditableText = (props) => {
 
   return (
     <div>
-      <div className={classes.background} style={{ color: props.color }}>
-        <div style={{ padding: 20 }}>{setDisplayState()}</div>
-        {setEditButton()}
+      <div
+        className={classes.background}
+        style={{
+          color: props.color,
+          fontWeight: props.weight ? props.weight : 400,
+          fontSize: props.size ? props.size : 14,
+          margin: props.space ? props.space : 10,
+        }}
+      >
+        <div>
+          {setDisplayState()}
+          {setEditButton()}
+        </div>
       </div>
     </div>
   )

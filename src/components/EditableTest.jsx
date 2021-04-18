@@ -100,7 +100,11 @@ const EditableText = (props) => {
           name="displayText"
           className={classes.textbox}
           placeholder="click here to add notes!"
-          style={{ borderColor: props.border, width: "100%" }}
+          style={{
+            borderColor: props.border,
+            width: "100%",
+            color: props.color,
+          }}
         >
           {displayText}
         </textarea>
