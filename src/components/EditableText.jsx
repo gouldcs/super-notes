@@ -18,13 +18,13 @@ const useStyles = makeStyles(() => ({
   button: {
     alignSelf: "center",
     width: "2vh",
+    fontSize: 12,
     textTransform: "none",
     backgroundColor: "#eeeeee",
     color: "#343434",
     height: "20",
     borderRadius: 20,
-    paddingLeft: 5,
-    paddingRight: 5,
+    height: 20,
     marginLeft: 35,
   },
 
@@ -52,61 +52,74 @@ const useStyles = makeStyles(() => ({
       fontSize: 14,
       fontWeight: 500,
     },
+    background: "none",
     marginTop: 15,
     paddingLeft: 15,
     paddingRight: 15,
-    paddingTop: 10,
-    paddingBottom: 10,
+    paddingTop: 20,
+    paddingBottom: 20,
   },
 }))
 
 const EditableText = (props) => {
   const classes = useStyles()
-  const { inputs, handleInputChange, handleSubmit } = useSubmit()
   var [displayText, setDisplayText] = useState("click here to add notes!")
-  var [showBox, setShowBox] = useState(false)
-  var [showClickArea, setClickArea] = useState(true)
-  const inputBox = (
-    <form
-      onSubmit={handleSubmit}
-      style={{ display: "flex", flexDirection: "row", width: "100%" }}
-    >
-      <textarea
-        type="text"
-        name="displayText"
-        className={classes.textbox}
-        onChange={handleInputChange}
-        value={inputs}
-        style={{ borderColor: props.border }}
-      >
-        {inputs}
-      </textarea>
-      <Button id="editbutton" type="submit" className={classes.button}>
-        edit
-      </Button>
-    </form>
-  )
+  var [edit, setEdit] = useState(false)
+  var [showEdit, setShowEdit] = useState(true)
 
-  const toggleEdit = () => {
-    showClickArea = !showClickArea
-    setClickArea(showClickArea)
-    showBox = !showBox
-    setShowBox(showBox)
+  const handleChange = () => {
+    showEdit = !showEdit
+    edit = !edit
+    setEdit(edit)
+    setShowEdit(showEdit)
   }
 
-  const clickArea = (
-    <div
-      style={{ width: "80%", height: "200%", position: "absolute" }}
-      onClick={toggleEdit}
-    />
-  )
+  const saveChange = () => {
+    showEdit = true
+    edit = false
+    setEdit(edit)
+    setShowEdit(showEdit)
+  }
+
+  function setEditButton() {
+    if (showEdit === true) {
+      return (
+        <Button className={classes.button} onClick={handleChange}>
+          edit
+        </Button>
+      )
+    } else {
+      return null
+    }
+  }
+
+  function setDisplayState() {
+    if (edit === false) {
+      return <div className={classes.notes}>{displayText}</div>
+    } else {
+      return (
+        <div>
+          <textarea
+            className={classes.textbox}
+            value={displayText}
+            onChange={(e) => {
+              displayText = e.target.value
+              setDisplayText(displayText)
+            }}
+          />
+          <Button className={classes.button} onClick={saveChange}>
+            save
+          </Button>
+        </div>
+      )
+    }
+  }
 
   return (
     <div>
-      {showClickArea ? clickArea : null}
       <div className={classes.background} style={{ color: props.color }}>
-        {inputs}
-        <div>{showBox ? inputBox : displayText}</div>
+        <div style={{ padding: 20 }}>{setDisplayState()}</div>
+        {setEditButton()}
       </div>
     </div>
   )

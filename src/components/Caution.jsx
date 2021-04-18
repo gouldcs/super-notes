@@ -3,13 +3,29 @@ import { makeStyles } from "@material-ui/core/styles"
 
 import Button from "@material-ui/core/Button"
 import caution from "./../assets/caution.svg"
+import plus from "./../assets/plus.svg"
+import head from "./../assets/header.svg"
+import text from "./../assets/text.svg"
+import warning from "./../assets/warn.svg"
+import imp from "./../assets/important.svg"
+import cancel from "./../assets/cancel.svg"
 import EditableText from "./EditableText"
+import EditableTest from "./EditableTest"
+
+import Header from "./../components/Header"
+import Text from "./../components/Text"
+import Warn from "./../components/Warn"
+import Info from "./../components/Info"
+import Correct from "./../components/Correct"
+import Question from "./../components/Question"
+import Important from "./../components/Important"
+import Code from "./../components/Code"
 
 const useStyles = makeStyles(() => ({
   background: {
     position: "relative",
     display: "flex",
-    flexDirecton: "row",
+    flexDirection: "column",
     width: "95%",
     textAlign: "left",
     backgroundColor: "#FFD4D4",
@@ -22,93 +38,157 @@ const useStyles = makeStyles(() => ({
     fontWeight: 500,
     marginBottom: 15,
     paddingLeft: 15,
-    paddingRight: 15,
-    paddingTop: 10,
-    paddingBottom: 10,
   },
 
-  textbox: {
-    resize: "vertical",
-    outline: "none",
-    width: "100%",
+  addButton: {
     display: "flex",
-    flexDirecton: "row",
-    textAlign: "left",
-    backgroundColor: "#eeeeee",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "30px",
+    height: "30px",
     border: "solid",
-    borderWidth: 2,
-    borderRadius: 15,
-    borderColor: "#FF1515",
-    color: "#FF1515",
-    fontFamily:
-      "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', \
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', \
-    sans-serif;",
-    fontSize: 14,
-    fontWeight: 500,
-    "&::placeholder": {
-      color: "#ff6565",
-      fontFamily:
-        "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', \
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', \
-    sans-serif;",
-      fontSize: 14,
-      fontWeight: 500,
-    },
-    marginTop: 15,
-    paddingLeft: 15,
-    paddingRight: 15,
-    paddingTop: 10,
-    paddingBottom: 10,
-  },
-
-  button: {
-    display: "none",
-    backgroundColor: "#ff6666",
-    margin: 15,
-    textTransform: "none",
-    borderRadius: 30,
-  },
-
-  exit: {
-    display: "none",
-    position: "absolute",
-    right: 0,
-    top: 0,
-    border: "none",
-    color: "#ff6666",
-    fontWeight: 800,
-    margin: 0,
-    padding: 0,
-    width: 0,
-    textTransform: "none",
-    borderRadius: 30,
-  },
-
-  submitButton: {
-    display: "flex",
-    backgroundColor: "#ff6666",
-    marginLeft: 15,
-    marginRight: 15,
-    marginTop: 15,
-    textTransform: "none",
-    borderRadius: 30,
+    borderWidth: 1.5,
+    borderColor: "#C6C6C6",
+    borderRadius: 50,
+    marginRight: 10,
+    outline: "none",
+    boxShadow: "0px 0px 5px 1px rgba(0.2, 0.2, 0.2, 0.2)",
   },
 }))
 
 const Caution = (props) => {
   const classes = useStyles()
-  const uniqueTag = Math.random()
+  var [components, setComponents] = useState([])
+  var [displayButton, setDisplayButton] = useState(false)
+
+  const toggleButton = () => {
+    displayButton = !displayButton
+    setDisplayButton(displayButton)
+  }
+
+  const addHeader = () => {
+    setComponents(components.concat(<Header />))
+    displayButton = !displayButton
+    setDisplayButton(displayButton)
+  }
+
+  const addText = () => {
+    setComponents(components.concat(<Text />))
+    displayButton = !displayButton
+    setDisplayButton(displayButton)
+  }
+
+  const addCaution = () => {
+    setComponents(components.concat(<Caution />))
+    displayButton = !displayButton
+    setDisplayButton(displayButton)
+  }
+
+  const addImportant = () => {
+    setComponents(components.concat(<Important />))
+    displayButton = !displayButton
+    setDisplayButton(displayButton)
+  }
+
+  const headerbutton = (
+    <button
+      className={classes.addButton}
+      style={{ borderColor: "#000000", background: "#fafafa" }}
+      onClick={addHeader}
+    >
+      <img alt="plus" src={head} />
+    </button>
+  )
+  const textbutton = (
+    <button
+      className={classes.addButton}
+      style={{ borderColor: "#5E5E5E", background: "#fafafa" }}
+      onClick={addText}
+    >
+      <img alt="plus" style={{ display: "flex", height: 10 }} src={text} />
+    </button>
+  )
+  const cautionbutton = (
+    <button
+      className={classes.addButton}
+      style={{ borderColor: "#ff1515", background: "#FFD4D4" }}
+      onClick={addCaution}
+    >
+      <img alt="plus" style={{ display: "flex", height: 18 }} src={caution} />
+    </button>
+  )
+  const importantbutton = (
+    <button
+      className={classes.addButton}
+      style={{ borderColor: "#15C7FF", background: "#D4F0FF" }}
+      onClick={addImportant}
+    >
+      <img alt="plus" style={{ display: "flex", height: 16 }} src={imp} />
+    </button>
+  )
+
+  const addbutton = (
+    <button
+      className={classes.addButton}
+      style={{
+        borderColor: "#C6C6C6",
+        background: "#fafafa",
+      }}
+      onClick={toggleButton}
+    >
+      <img alt="plus" src={plus} />
+    </button>
+  )
+
+  const exitbutton = (
+    <button
+      className={classes.addButton}
+      style={{ borderColor: "#ff1515", background: "#FFD4D4" }}
+      onClick={toggleButton}
+    >
+      <img alt="plus" src={cancel} />
+    </button>
+  )
 
   return (
     <div className={classes.background}>
-      <img
-        alt="caution"
-        src={caution}
-        style={{ width: "3vh", maxWidth: 25, paddingRight: 10 }}
-      />
-      <div style={{ display: "flex", flexDirection: "column", width: "80%" }}>
-        <EditableText color="#FF1515" border="#FF1515" tag={uniqueTag} />
+      <div style={{ display: "flex", flexDirection: "row" }}>
+        <img
+          alt="caution"
+          src={caution}
+          style={{ width: "3vh", maxWidth: 25, paddingRight: 10 }}
+        />
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            width: "100%",
+            height: "100%",
+          }}
+        >
+          <EditableText color="#FF1515" border="#FF1515" />
+        </div>
+      </div>
+      <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>
+        <div
+          style={{ display: "flex", flexDirection: "column", width: "100%" }}
+        >
+          {components}
+        </div>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          width: "100%",
+          marginBottom: 10,
+        }}
+      >
+        {displayButton ? exitbutton : addbutton}
+        {displayButton ? headerbutton : null}
+        {displayButton ? textbutton : null}
+        {displayButton ? cautionbutton : null}
+        {displayButton ? importantbutton : null}
       </div>
     </div>
   )

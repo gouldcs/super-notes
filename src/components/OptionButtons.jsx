@@ -8,7 +8,8 @@ import text from "./../assets/text.svg"
 import warning from "./../assets/warn.svg"
 import caution from "./../assets/caution.svg"
 import imp from "./../assets/important.svg"
-import cancel from "./../assets/cancel.svg"
+
+import theme from "./../hooks/theme.js"
 
 import Header from "./../components/Header"
 import Text from "./../components/Text"
@@ -48,8 +49,6 @@ const useStyles = makeStyles(
       borderColor: "#C6C6C6",
       borderRadius: 50,
       marginRight: 10,
-      outline: "none",
-      boxShadow: "0px 0px 5px 1px rgba(0.2, 0.2, 0.2, 0.2)",
     },
   }),
   { name: "Page" }
@@ -89,75 +88,38 @@ const Page = (props) => {
     setDisplayButton(displayButton)
   }
 
-  const headerbutton = (
-    <button
-      className={classes.addButton}
-      style={{ borderColor: "#000000", background: "#fafafa" }}
-      onClick={addHeader}
-    >
-      <img alt="plus" src={head} />
-    </button>
-  )
-  const textbutton = (
-    <button
-      className={classes.addButton}
-      style={{ borderColor: "#5E5E5E", background: "#fafafa" }}
-      onClick={addText}
-    >
-      <img alt="plus" style={{ display: "flex", height: 10 }} src={text} />
-    </button>
-  )
-  const cautionbutton = (
-    <button
-      className={classes.addButton}
-      style={{ borderColor: "#ff1515", background: "#FFD4D4" }}
-      onClick={addCaution}
-    >
-      <img alt="plus" style={{ display: "flex", height: 18 }} src={caution} />
-    </button>
-  )
-  const importantbutton = (
-    <button
-      className={classes.addButton}
-      style={{ borderColor: "#15C7FF", background: "#D4F0FF" }}
-      onClick={addImportant}
-    >
-      <img alt="plus" style={{ display: "flex", height: 16 }} src={imp} />
-    </button>
-  )
-
-  const addbutton = (
-    <button
-      className={classes.addButton}
-      style={{ borderColor: "#C6C6C6", background: "#fafafa" }}
-      onClick={toggleButton}
-    >
-      <img alt="plus" src={plus} />
-    </button>
-  )
-
-  const exitbutton = (
-    <button
-      className={classes.addButton}
-      style={{ borderColor: "#ff1515", background: "#FFD4D4" }}
-      onClick={toggleButton}
-    >
-      <img alt="plus" src={cancel} />
-    </button>
-  )
-
   return (
-    <div className={classes.page}>
-      {components}
-      <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>
-        {displayButton ? exitbutton : addbutton}
-        {displayButton ? headerbutton : null}
-        {displayButton ? textbutton : null}
-        {displayButton ? cautionbutton : null}
-        {displayButton ? importantbutton : null}
-      </div>
+    <div style={{ diplay: "flex", justifyContent: "row", width: "100%" }}>
+      <button
+        className={classes.addButton}
+        style={{ borderColor: "#000000", background: "#fafafa" }}
+        onClick={addHeader}
+      >
+        <img alt="plus" src={head} />
+      </button>
+      <button
+        className={classes.addButton}
+        style={{ borderColor: "#C6C6C6", background: "#fafafa" }}
+        onClick={addText}
+      >
+        <img alt="plus" style={{ display: "flex", height: 10 }} src={text} />
+      </button>
+      <button
+        className={classes.addButton}
+        style={{ borderColor: "#5E5E5E", background: theme.cautionbg }}
+        onClick={addCaution}
+      >
+        <img alt="plus" style={{ display: "flex", height: 18 }} src={caution} />
+      </button>
+      <button
+        className={classes.addButton}
+        style={{ borderColor: "#15C7FF", background: "#D4F0FF" }}
+        onClick={addImportant}
+      >
+        <img alt="plus" style={{ display: "flex", height: 16 }} src={imp} />
+      </button>
     </div>
   )
 }
 
-export default Page
+export default OptionButtons

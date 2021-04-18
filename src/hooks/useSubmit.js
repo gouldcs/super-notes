@@ -1,21 +1,15 @@
   import React, {useState} from 'react';
   
   const useSubmit = (callback) => {
-    const [input, setInput] = useState({})
-
-    const handleSubmit = (event) => {
-      callback()
-    }
+    const [input, setInput] = useState("")
 
     const handleInputChange = (event) => {
-      event.persist()
-      setInput((input) => ({
-        ...input,
-        [event.target.name]: [event.target.value],
-      }))
+      console.log(input + "HERER")
+      const newInput = event.target.value
+      setInput(newInput)
     }
 
-    return (handleSubmit, handleInputChange, input)
+    return (handleInputChange, input)
   }
 
   export default useSubmit
